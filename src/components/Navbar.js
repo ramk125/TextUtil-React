@@ -1,44 +1,55 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-// import { NavLink } from 'react-router-dom';
-
 
 function Navbar(props) {
   return (
-    <nav className={`navbar navbar-expand-lg navbar-${props.mode} bg-${props.mode}`}>
-      <div className="container-fluid">
-        <Link className="navbar-brand" to="/">{props.title}</Link>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
-          data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-          aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
+    <nav className={`navbar navbar-${props.mode} bg-${props.mode}`}>
+      <div className="container-fluid d-flex justify-content-between align-items-center px-4">
 
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav me-auto">
-            <li className="nav-item">
-              <Link className="nav-link active" to="/">Home</Link>
+        {/* LEFT SIDE: TextUtils | Home | About */}
+        <div className="d-flex align-items-center">
+          {/* Brand */}
+          <Link className="navbar-brand fw-bold me-3" to="/">
+            {props.title}
+          </Link>
+
+          {/* Home and About Links */}
+          <ul className="navbar-nav flex-row">
+            <li className="nav-item me-3">
+              <Link className="nav-link fw-bold" to="/">Home</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/about">About</Link>
+              <Link className="nav-link fw-bold mx-2" to="/about">About</Link>
             </li>
           </ul>
+        </div>
 
-          {/* Dark mode toggle switch */}
-          <div className={`form-check form-switch text-${props.mode === 'light' ? 'dark' : 'light'}`}>
+        {/* RIGHT SIDE: Theme Color Buttons + Dark/Light Toggle */}
+        <div className={`d-flex align-items-center text-${props.mode === 'light' ? 'dark' : 'light'}`}>
+          {/* Theme Color Buttons */}
+          <div className="d-flex me-3">
+            <div className="bg-primary rounded mx-1" onClick={() => props.toggleMode('primary')} style={{ height: '25px', width: '25px', cursor: 'pointer' }}></div>
+            <div className="bg-danger rounded mx-1" onClick={() => props.toggleMode('danger')} style={{ height: '25px', width: '25px', cursor: 'pointer' }}></div>
+            <div className="bg-success rounded mx-1" onClick={() => props.toggleMode('success')} style={{ height: '25px', width: '25px', cursor: 'pointer' }}></div>
+            <div className="bg-warning rounded mx-1" onClick={() => props.toggleMode('warning')} style={{ height: '25px', width: '25px', cursor: 'pointer' }}></div>
+          </div>
+
+          {/* Mode Toggle Switch */}
+          <div className="form-check form-switch">
             <input
               className="form-check-input"
               type="checkbox"
               role="switch"
               id="flexSwitchCheckDefault"
-              onClick={props.toggleMode}
+              onClick={() => props.toggleMode(null)}
             />
-            <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
-              Enable {props.mode === 'light' ? 'Dark' : 'Light'} Mode
+            <label className="form-check-label fw-bold ms-1" htmlFor="flexSwitchCheckDefault">
+              {props.mode === 'light' ? 'Dark' : 'Light'} Mode
             </label>
           </div>
         </div>
+
       </div>
     </nav>
   );
